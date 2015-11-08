@@ -168,6 +168,12 @@ span {
   text-align: center;
 }
 
+.classes-heading{
+  padding-left: 0px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
 /* Media queries to handle various device widths */
 
 @media only screen and (max-width: 1024px) {
