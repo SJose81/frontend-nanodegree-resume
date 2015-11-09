@@ -95,6 +95,7 @@ var education = {
 	]
 };
 
+
 /* Top Name and Contact Section - Adding name and contact details with javascript */
 $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
 $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
@@ -109,13 +110,13 @@ $("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
 
 
 /* Skills Section - Adding technical skills to the resume */
-if(bio.skills.length > 0){
-	$("#header").append(HTMLskillsStart);
-	for (var i = 0; i < bio.skills.length; i++) {
-		$("#header").append(HTMLskills.replace("%data%", bio.skills[i]));
-	}
+$("#header").append(HTMLskillsStart);
+for (skill in bio.skills) {
+	$("#header").append(HTMLskills.replace("%data%", bio.skills[skill]));
 }
 
+
+/* Jobs Section - Adding job details */
 for(job in work.jobs){
 	$("#workExperience").append(HTMLworkStart);
 	var formattedJobSection = HTMLworkEmployer.replace("%data%", work.jobs[job].employer) 
@@ -127,39 +128,42 @@ for(job in work.jobs){
 	$(".work-entry:last").append(formattedJobSection);
 }
 
-/* Projects Section - Adding project details */
-var projectPreTag = HTMLprojectStart.split("</div>");
-$("#projects").append(projectPreTag[0]);
-for(var i = 0; i < projects.proj.length; i++){
-	$(".project-entry").append(HTMLprojectTitle.replace("%data%", projects.proj[i].title));
-	$(".project-entry").append(HTMLprojectDates.replace("%data%", projects.proj[i].date));
-	$(".project-entry").append(HTMLprojectDescription.replace("%data%", projects.proj[i].description));
-	for(var j = 0;j < projects.proj[i].images.length; j++){
-		$(".project-entry").append(HTMLprojectImage.replace("%data%", projects.proj[i].images[j]));
+
+/* Project Section - Adding project details */
+for(projNum in projects.proj){
+	$("#projects").append(HTMLprojectStart);
+	var formattedProjSection = HTMLprojectTitle.replace("%data%", projects.proj[projNum].title) + 
+	HTMLprojectDates.replace("%data%", projects.proj[projNum].date) +
+	HTMLprojectDescription.replace("%data%", projects.proj[projNum].description);
+	for(var j = 0;j < projects.proj[projNum].images.length; j++){
+		formattedProjSection += HTMLprojectImage.replace("%data%", projects.proj[projNum].images[j]);
 	}
+
+    $(".project-entry:last").append(formattedProjSection);	
 }
-$("#projects").append("</div>");
 
 
 /* Education Section - Adding educational background details */
-var eduPreTag = HTMLschoolStart.split("</div>");
-$("#education").append(eduPreTag[0]);
-for (var i = 0; i < education.schools.length; i++) {
-	$(".education-entry").append(HTMLschoolName.replace("%data%", education.schools[i].name) 
-			+ HTMLschoolDegree.replace("%data%", education.schools[i].degree));
-	$(".education-entry").append(HTMLschoolDates.replace("%data%", education.schools[i].year));
-	$(".education-entry").append(HTMLschoolLocation.replace("%data%", education.schools[i].city));
-	$(".education-entry").append(HTMLschoolMajor.replace("%data%", education.schools[i].major));
-}
-$(".education-entry").append(HTMLonlineClasses);
+for (sclIndex in education.schools) {
+	$("#education").append(HTMLschoolStart);
+	var formattedEduSection = HTMLschoolName.replace("%data%", education.schools[sclIndex].name) 
+		+ HTMLschoolDegree.replace("%data%", education.schools[sclIndex].degree);
+	formattedEduSection += HTMLschoolDates.replace("%data%", education.schools[sclIndex].year);
+	formattedEduSection += HTMLschoolLocation.replace("%data%", education.schools[sclIndex].city);
+	formattedEduSection += HTMLschoolMajor.replace("%data%", education.schools[sclIndex].major);
 
-for (var i = 0; i < education.onlineclasses.length; i++) {
-	$(".education-entry").append(HTMLonlineTitle.replace("%data%", education.onlineclasses[i].course)
-			+ HTMLonlineSchool.replace("%data%", education.onlineclasses[i].name));
-	$(".education-entry").append(HTMLonlineDates.replace("%data%", education.onlineclasses[i].year));
-	$(".education-entry").append(HTMLonlineURL.replace("%data%", education.onlineclasses[i].url));
+	$(".education-entry:last").append(formattedEduSection);
+}
+
+var clsHeading = HTMLonlineClasses;
+for (classIndex in education.onlineclasses) {
+	var formattedClSection =  HTMLonlineTitle.replace("%data%", education.onlineclasses[classIndex].course)
+		+ HTMLonlineSchool.replace("%data%", education.onlineclasses[classIndex].name) 
+		+ HTMLonlineDates.replace("%data%", education.onlineclasses[classIndex].year) 
+		+ HTMLonlineURL.replace("%data%", education.onlineclasses[classIndex].url);
+
+	$(".education-entry:last").append(clsHeading + formattedClSection);
 }	
-$("#education").append("</div>");
 
 
 /* Footer Contact Section - Adding contact details with javascript */
@@ -168,9 +172,6 @@ $("#footerContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
 $("#footerContacts").append(HTMLlinkedin.replace("%data%", bio.contacts.linkedin));
 $("#footerContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
 $("#footerContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
-
-
-
 
 
 
