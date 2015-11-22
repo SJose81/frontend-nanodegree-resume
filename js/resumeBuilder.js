@@ -1,24 +1,59 @@
 /*
-
+ ResumeBuilder.js javascript file containing the  data that will be appended 
+ to appropriate div tags during page load.
 */
 
+/*bio object with biographical information displayed in the header and footer section */
 var bio = {
-	"name":"Sophia G",
-	"role": "SOFTWARE ENGINEER",
-	"contacts": {
+	name:"Sophia G",
+	role: "SOFTWARE ENGINEER",
+	contacts: {
 		"mobile": "650-555-5555",
 		"email": "janedoe@email.com",
 		"linkedin": "janedoe",
 		"github": "janedoe",
 		"location": "Mountain View, CA"
 	},
-	"welcomeMessage": "lorem ipsum dolor sit amet etc etc etc.",
-	"skills": [
-		"Java", "Selenium, TestNG", "HTML5", "CSS, Bootstrap", "Javascript, jQuery", "SQL"
+	welcomeMessage: "Welcome...Below you will find my work experience and project details!",
+	skills: [
+		"Java, Selenium, TestNG", "HTML5", "CSS, Bootstrap", "Javascript, jQuery", "SQL"
 	],
-	"bioPic": "images/MyImg.png"
-};
+	bioPic: "images/MyImg.png",
 
+	/* display function - add Header and footer bio details */
+	display: function(){
+		/* Top Name and Contact Section - Adding name and contact details*/
+		$("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
+		$("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
+		$("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
+		$("#header").append(HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage));
+
+		$("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
+		$("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
+		$("#topContacts").append(HTMLlinkedin.replace("%data%", bio.contacts.linkedin));
+		$("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
+		$("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+
+
+		/* Skills Section - Adding technical skills to the resume */
+		$("#header").append(HTMLskillsStart);
+		for (skill in bio.skills) {
+			$("#header").append(HTMLskills.replace("%data%", bio.skills[skill]));
+		}
+
+		/* Footer Contact Section - Adding contact details */
+		$("#footerContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
+		$("#footerContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
+		$("#footerContacts").append(HTMLlinkedin.replace("%data%", bio.contacts.linkedin));
+		$("#footerContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
+		$("#footerContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+	}
+	
+};
+bio.display();
+
+
+/* work object with work related information */
 var work = {
 	"jobs": [
 		{
@@ -35,10 +70,26 @@ var work = {
 			"empCity": "San Jose, CA",
 			"workDescrip": "Worked as a software devloper on multiple projects for Tasmanave Inc."
 		}
-	]
+	],
+
+	display: function(){
+		for(job in work.jobs){
+			$("#workExperience").append(HTMLworkStart);
+			var formattedJobSection = HTMLworkEmployer.replace("%data%", work.jobs[job].employer) 
+				+ HTMLworkTitle.replace("%data%", work.jobs[job].workTitle) +
+			HTMLworkDates.replace("%data%", work.jobs[job].yearsEmp) + 
+			HTMLworkLocation.replace("%data%", work.jobs[job].empCity) +
+			HTMLworkDescription.replace("%data%", work.jobs[job].workDescrip);
+
+			$(".work-entry:last").append(formattedJobSection);
+		}
+	}
 	
 };
+work.display();
 
+
+/* projects object that contains details of each project*/
 var projects = {
 	"proj": [
 		{
@@ -65,24 +116,43 @@ var projects = {
 				"images/thots.png"
 			]
 		}
-	]
-};
+	],
 
+	display: function(){
+		for(projNum in projects.proj){
+			$("#projects").append(HTMLprojectStart);
+			var formattedProjTitle = HTMLprojectTitle.replace("%data%", projects.proj[projNum].title);
+			$(".project-entry:last").append(formattedProjTitle);
+			var formattedProjDate = HTMLprojectDates.replace("%data%", projects.proj[projNum].date);
+			$(".project-entry:last").append(formattedProjDate);
+			var formattedProjDescrip = HTMLprojectDescription.replace("%data%", projects.proj[projNum].description);
+			$(".project-entry:last").append(formattedProjDescrip);
+			for(var j = 0;j < projects.proj[projNum].images.length; j++){
+				formattedImage = HTMLprojectImage.replace("%data%", projects.proj[projNum].images[j]);
+				$(".project-entry:last").append(formattedImage);
+			}   	
+		}
+	}
+};
+projects.display();
+
+
+/* education object with education related information*/
 var education = {
 	"schools": [
 		{
 			"name": "California State University",
-			"year": "June 2010",
-			"city": "Hayward, CA",
+			"location": "Hayward, CA",
 			"degree": "Masters",
-			"major": "Computer Science"
+			"major": "Computer Science",
+			"dates": 2010
 		},
 		{
 			"name": "Pune University",
-			"year": "May 2003",
-			"city": "Pune, India",
+			"location": "Pune, India",
 			"degree": "BA",
-			"major": "Insrumentation"
+			"major": "Insrumentation",
+			"dates": 2003
 		}
 	],
 	"onlineclasses": [
@@ -92,86 +162,40 @@ var education = {
 			"year": "Oct 2015 - in progress",
 			"url": "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
 		}
-	]
-};
+	],
+	display: function(){
+		for (sclIndex in education.schools) {
+			$("#education").append(HTMLschoolStart);
+			var formattedEduSection = HTMLschoolName.replace("%data%", education.schools[sclIndex].name) 
+				+ HTMLschoolDegree.replace("%data%", education.schools[sclIndex].degree);
+			formattedEduSection += HTMLschoolDates.replace("%data%", education.schools[sclIndex].dates);
+			formattedEduSection += HTMLschoolLocation.replace("%data%", education.schools[sclIndex].location);
+			formattedEduSection += HTMLschoolMajor.replace("%data%", education.schools[sclIndex].major);
 
+			$(".education-entry:last").append(formattedEduSection);
+		}
 
-/* Top Name and Contact Section - Adding name and contact details with javascript */
-$("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
-$("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
-$("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
-//$("#header").append(HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage));
+		var clsHeading = HTMLonlineClasses;
+		for (classIndex in education.onlineclasses) {
+			var formattedClSection =  HTMLonlineTitle.replace("%data%", education.onlineclasses[classIndex].course)
+				+ HTMLonlineSchool.replace("%data%", education.onlineclasses[classIndex].name) 
+				+ HTMLonlineDates.replace("%data%", education.onlineclasses[classIndex].year) 
+				+ HTMLonlineURL.replace("%data%", education.onlineclasses[classIndex].url);
 
-$("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
-$("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
-$("#topContacts").append(HTMLlinkedin.replace("%data%", bio.contacts.linkedin));
-$("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
-$("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
-
-
-/* Skills Section - Adding technical skills to the resume */
-$("#header").append(HTMLskillsStart);
-for (skill in bio.skills) {
-	$("#header").append(HTMLskills.replace("%data%", bio.skills[skill]));
-}
-
-
-/* Jobs Section - Adding job details */
-for(job in work.jobs){
-	$("#workExperience").append(HTMLworkStart);
-	var formattedJobSection = HTMLworkEmployer.replace("%data%", work.jobs[job].employer) 
-		+ HTMLworkTitle.replace("%data%", work.jobs[job].workTitle) +
-	HTMLworkDates.replace("%data%", work.jobs[job].yearsEmp) + 
-	HTMLworkLocation.replace("%data%", work.jobs[job].empCity) +
-	HTMLworkDescription.replace("%data%", work.jobs[job].workDescrip);
-
-	$(".work-entry:last").append(formattedJobSection);
-}
-
-
-/* Project Section - Adding project details */
-for(projNum in projects.proj){
-	$("#projects").append(HTMLprojectStart);
-	var formattedProjSection = HTMLprojectTitle.replace("%data%", projects.proj[projNum].title) + 
-	HTMLprojectDates.replace("%data%", projects.proj[projNum].date) +
-	HTMLprojectDescription.replace("%data%", projects.proj[projNum].description);
-	for(var j = 0;j < projects.proj[projNum].images.length; j++){
-		formattedProjSection += HTMLprojectImage.replace("%data%", projects.proj[projNum].images[j]);
+			$(".education-entry:last").append(clsHeading + formattedClSection);
+		}
 	}
-
-    $(".project-entry:last").append(formattedProjSection);	
-}
-
-
-/* Education Section - Adding educational background details */
-for (sclIndex in education.schools) {
-	$("#education").append(HTMLschoolStart);
-	var formattedEduSection = HTMLschoolName.replace("%data%", education.schools[sclIndex].name) 
-		+ HTMLschoolDegree.replace("%data%", education.schools[sclIndex].degree);
-	formattedEduSection += HTMLschoolDates.replace("%data%", education.schools[sclIndex].year);
-	formattedEduSection += HTMLschoolLocation.replace("%data%", education.schools[sclIndex].city);
-	formattedEduSection += HTMLschoolMajor.replace("%data%", education.schools[sclIndex].major);
-
-	$(".education-entry:last").append(formattedEduSection);
-}
-
-var clsHeading = HTMLonlineClasses;
-for (classIndex in education.onlineclasses) {
-	var formattedClSection =  HTMLonlineTitle.replace("%data%", education.onlineclasses[classIndex].course)
-		+ HTMLonlineSchool.replace("%data%", education.onlineclasses[classIndex].name) 
-		+ HTMLonlineDates.replace("%data%", education.onlineclasses[classIndex].year) 
-		+ HTMLonlineURL.replace("%data%", education.onlineclasses[classIndex].url);
-
-	$(".education-entry:last").append(clsHeading + formattedClSection);
-}	
+	
+};
+education.display();
 
 
-/* Footer Contact Section - Adding contact details with javascript */
-$("#footerContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
-$("#footerContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
-$("#footerContacts").append(HTMLlinkedin.replace("%data%", bio.contacts.linkedin));
-$("#footerContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
-$("#footerContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+/* Map showing where I live and work */
+$("#mapDiv").append(googleMap);
+
+
+
+
 
 
 
