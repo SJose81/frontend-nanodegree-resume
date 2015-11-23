@@ -37,7 +37,7 @@ var bio = {
 
 		/* Skills Section - Adding technical skills to the resume */
 		$("#header").append(HTMLskillsStart);
-		for (skill in bio.skills) {
+		for (var skill = 0; skill < bio.skills.length; skill++) {
 			$("#header").append(HTMLskills.replace("%data%", bio.skills[skill]));
 		}
 
@@ -73,10 +73,10 @@ var work = {
 	],
 
 	display: function(){
-		for(job in work.jobs){
+		for(var job = 0; job < work.jobs.length; job++){
 			$("#workExperience").append(HTMLworkStart);
-			var formattedJobSection = HTMLworkEmployer.replace("%data%", work.jobs[job].employer) 
-				+ HTMLworkTitle.replace("%data%", work.jobs[job].workTitle) +
+			var formattedJobSection = HTMLworkEmployer.replace("%data%", work.jobs[job].employer) + 
+			HTMLworkTitle.replace("%data%", work.jobs[job].workTitle) +
 			HTMLworkDates.replace("%data%", work.jobs[job].yearsEmp) + 
 			HTMLworkLocation.replace("%data%", work.jobs[job].empCity) +
 			HTMLworkDescription.replace("%data%", work.jobs[job].workDescrip);
@@ -119,7 +119,7 @@ var projects = {
 	],
 
 	display: function(){
-		for(projNum in projects.proj){
+		for(var projNum = 0; projNum < projects.proj.length; projNum++){
 			$("#projects").append(HTMLprojectStart);
 			var formattedProjTitle = HTMLprojectTitle.replace("%data%", projects.proj[projNum].title);
 			$(".project-entry:last").append(formattedProjTitle);
@@ -164,10 +164,10 @@ var education = {
 		}
 	],
 	display: function(){
-		for (sclIndex in education.schools) {
+		for (var sclIndex = 0; sclIndex < education.schools.length; sclIndex++) {
 			$("#education").append(HTMLschoolStart);
-			var formattedEduSection = HTMLschoolName.replace("%data%", education.schools[sclIndex].name) 
-				+ HTMLschoolDegree.replace("%data%", education.schools[sclIndex].degree);
+			var formattedEduSection = HTMLschoolName.replace("%data%", education.schools[sclIndex].name) + 
+			HTMLschoolDegree.replace("%data%", education.schools[sclIndex].degree);
 			formattedEduSection += HTMLschoolDates.replace("%data%", education.schools[sclIndex].dates);
 			formattedEduSection += HTMLschoolLocation.replace("%data%", education.schools[sclIndex].location);
 			formattedEduSection += HTMLschoolMajor.replace("%data%", education.schools[sclIndex].major);
@@ -176,11 +176,11 @@ var education = {
 		}
 
 		var clsHeading = HTMLonlineClasses;
-		for (classIndex in education.onlineclasses) {
-			var formattedClSection =  HTMLonlineTitle.replace("%data%", education.onlineclasses[classIndex].course)
-				+ HTMLonlineSchool.replace("%data%", education.onlineclasses[classIndex].name) 
-				+ HTMLonlineDates.replace("%data%", education.onlineclasses[classIndex].year) 
-				+ HTMLonlineURL.replace("%data%", education.onlineclasses[classIndex].url);
+		for (var classIndex = 0; classIndex < education.onlineclasses.length; classIndex++) {
+			var formattedClSection =  HTMLonlineTitle.replace("%data%", education.onlineclasses[classIndex].course) +
+				HTMLonlineSchool.replace("%data%", education.onlineclasses[classIndex].name) + 
+				HTMLonlineDates.replace("%data%", education.onlineclasses[classIndex].year) + 
+				HTMLonlineURL.replace("%data%", education.onlineclasses[classIndex].url);
 
 			$(".education-entry:last").append(clsHeading + formattedClSection);
 		}
