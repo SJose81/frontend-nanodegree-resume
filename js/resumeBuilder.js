@@ -18,14 +18,14 @@ var bio = {
 	skills: [
 		"Java, Selenium, TestNG", "HTML5", "CSS, Bootstrap", "Javascript, jQuery", "SQL"
 	],
-	bioPic: "images/MyImg.png",
+	biopic: "images/MyImg.png",
 
 	/* display function - add Header and footer bio details */
 	display: function(){
 		/* Top Name and Contact Section - Adding name and contact details*/
 		$("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
 		$("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
-		$("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
+		$("#header").append(HTMLbioPic.replace("%data%", bio.biopic));
 		$("#header").append(HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage));
 
 		$("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
@@ -37,7 +37,7 @@ var bio = {
 
 		/* Skills Section - Adding technical skills to the resume */
 		$("#header").append(HTMLskillsStart);
-		for (var skill = 0; skill < bio.skills.length; skill++) {
+		for (var skill = 0, len = bio.skills.length; skill < len; skill++) {
 			$("#header").append(HTMLskills.replace("%data%", bio.skills[skill]));
 		}
 
@@ -73,7 +73,7 @@ var work = {
 	],
 
 	display: function(){
-		for(var job = 0; job < work.jobs.length; job++){
+		for(var job = 0, len = work.jobs.length; job < len; job++){
 			$("#workExperience").append(HTMLworkStart);
 			var formattedJobSection = HTMLworkEmployer.replace("%data%", work.jobs[job].employer) + 
 			HTMLworkTitle.replace("%data%", work.jobs[job].title) +
@@ -119,7 +119,7 @@ var projects = {
 	],
 
 	display: function(){
-		for(var projNum = 0; projNum < projects.projects.length; projNum++){
+		for(var projNum = 0, len = projects.projects.length; projNum < len; projNum++){
 			$("#projects").append(HTMLprojectStart);
 			var formattedProjTitle = HTMLprojectTitle.replace("%data%", projects.projects[projNum].title);
 			$(".project-entry:last").append(formattedProjTitle);
@@ -127,7 +127,7 @@ var projects = {
 			$(".project-entry:last").append(formattedProjDate);
 			var formattedProjDescrip = HTMLprojectDescription.replace("%data%", projects.projects[projNum].description);
 			$(".project-entry:last").append(formattedProjDescrip);
-			for(var j = 0;j < projects.projects[projNum].images.length; j++){
+			for(var j = 0, imgLen = projects.projects[projNum].images.length;j < imgLen; j++){
 				formattedImage = HTMLprojectImage.replace("%data%", projects.projects[projNum].images[j]);
 				$(".project-entry:last").append(formattedImage);
 			}   	
@@ -166,14 +166,14 @@ var education = {
 		}
 	],
 	display: function(){
-		for (var sclIndex = 0; sclIndex < education.schools.length; sclIndex++) {
+		for (var sclIndex = 0, len = education.schools.length; sclIndex < len; sclIndex++) {
 			var myMajors = "";
 			$("#education").append(HTMLschoolStart);
 			var formattedEduSection = HTMLschoolName.replace("%data%", education.schools[sclIndex].name) + 
 			HTMLschoolDegree.replace("%data%", education.schools[sclIndex].degree);
 			formattedEduSection += HTMLschoolDates.replace("%data%", education.schools[sclIndex].dates);
 			formattedEduSection += HTMLschoolLocation.replace("%data%", education.schools[sclIndex].location);
-			for(var majIndx = 0; majIndx< education.schools[sclIndex].majors.length; majIndx++){
+			for(var majIndx = 0, majlen = education.schools[sclIndex].majors.length; majIndx < majlen; majIndx++){
 				myMajors += education.schools[sclIndex].majors[majIndx];
 				if((majIndx + 1) != education.schools[sclIndex].majors.length){
 					myMajors += " , ";
@@ -185,7 +185,7 @@ var education = {
 		}
 
 		var clsHeading = HTMLonlineClasses;
-		for (var classIndex = 0; classIndex < education.onlineclasses.length; classIndex++) {
+		for (var classIndex = 0, oclen = education.onlineclasses.length; classIndex < oclen; classIndex++) {
 			var formattedClSection =  HTMLonlineTitle.replace("%data%", education.onlineclasses[classIndex].title) +
 				HTMLonlineSchool.replace("%data%", education.onlineclasses[classIndex].school) + 
 				HTMLonlineDates.replace("%data%", education.onlineclasses[classIndex].date) + 
